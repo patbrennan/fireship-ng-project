@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "fireship-kanban": {
+      "hosting": {
+        "angular-course": [
+          "fireship-kanban"
+        ]
+      }
+    }
+  }
+}

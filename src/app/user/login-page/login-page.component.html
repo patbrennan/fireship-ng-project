@@ -1,1 +1,25 @@
-<p>login-page works!</p>
+<main>
+  <!-- true if not logged in (authState would return null) -->
+  <div *ngIf="!(afAuth.authState | async)">
+    <h1>Login</h1>
+
+    <button mat-raised-button appGoogleSignin>
+      <img src="/assets/google-logo.png" /> Login with Google
+    </button>
+
+    <h5>OR</h5>
+
+    <app-email-login></app-email-login>
+  </div>
+
+  <!-- user is template variable that will allow us to call properties on it -->
+  <div *ngIf="afAuth.authState | async as user" class="logout">
+    <p>
+      Logged in as <strong>{{ user.email }}</strong>
+    </p>
+
+    <button mat-stroked-button (click)="afAuth.auth.signOut()">
+      Logout
+    </button>
+  </div>
+</main>

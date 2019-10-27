@@ -1,0 +1,32 @@
+<mat-card class="outer-card">
+  <mat-card-header>
+    <!-- slot for the handle, which is passed down from the parent component's -->
+    <!-- html template - i.e., what's between the <app-board> tags -->
+    <ng-content ></ng-content>
+    <mat-card-title>
+      {{ board.title }}
+    </mat-card-title>
+
+    <mat-card-subtitle>
+      {{ board.id }}
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <div
+    class="tasks"
+    cdkDropList
+    cdkDropListOrientation="vertical"
+    (cdkDropListDropped)="taskDrop($event)"
+  >
+
+    <div
+      class="inner-card"
+      cdkDrag
+      *ngFor="let task of board.tasks; let i = index"
+    >
+      <mat-card [ngClass]="task.label">
+        {{ task.description }}
+      </mat-card>
+    </div>
+  </div>
+</mat-card>

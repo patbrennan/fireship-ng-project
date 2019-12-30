@@ -8,10 +8,17 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatDialogModule, MatButtonToggleModule } from '@angular/material';
 import { BoardListComponent } from './board-list/board-list.component';
 import { BoardComponent } from './board/board.component';
+import { BoardDialogComponent } from './dialogs/board-dialog.component';
+import { TaskDialogComponent } from './dialogs/task-dialog.component';
 
 
 @NgModule({
-  declarations: [BoardListComponent, BoardComponent],
+  declarations: [
+    BoardListComponent,
+    BoardComponent,
+    BoardDialogComponent,
+    TaskDialogComponent
+  ],
   imports: [
     CommonModule,
     KanbanRoutingModule,
@@ -20,6 +27,10 @@ import { BoardComponent } from './board/board.component';
     DragDropModule,
     MatDialogModule,
     MatButtonToggleModule,
-  ]
+  ],
+  // entryComponent: not loaded by router or declared in html. Compiler
+  // has no way to detect if it's used in application
+  // :: can be dynamically loaded in app w/out being declared anywhere
+  entryComponents: [BoardDialogComponent, TaskDialogComponent]
 })
 export class KanbanModule { }

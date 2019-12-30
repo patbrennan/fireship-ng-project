@@ -3,6 +3,8 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Board } from '../board.model';
 import { Subscription } from 'rxjs';
 import { BoardService } from '../board.service';
+import { MatDialog } from '@angular/material';
+import { BoardDialogComponent } from '../dialogs/board-dialog.component';
 
 @Component({
   selector: 'app-board-list',
@@ -15,6 +17,7 @@ export class BoardListComponent implements OnInit {
 
   constructor(
     public boardService: BoardService,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -32,6 +35,23 @@ export class BoardListComponent implements OnInit {
     moveItemInArray(this.boards, event.previousIndex, event.currentIndex);
     // tie the same action to our back end to update db
     this.boardService.sortBoards(this.boards);
+  }
+
+  openBoardDialog(): void {
+    const dialogRef = this.dialog.open(BoardDialogComponent, {
+      width: '400px',
+      data: {} // any data updating will go here for when dialog updates (empty now because new baord)
+    });
+
+    // result is data obj in dialog we bound to ngModel in DialogComponent
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.boardService.createBoard({
+          title: result,
+          priority: this.boards.length
+        });
+      }
+    });
   }
 
 }
